@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>package.json中的版本号以及^符号和~符号前缀的区别</title>
-    <url>/2022/09/02/framework/package.json%E4%B8%AD%E7%9A%84%E7%89%88%E6%9C%AC%E5%8F%B7/</url>
+    <url>/iblog/2022/09/02/framework/package.json%E4%B8%AD%E7%9A%84%E7%89%88%E6%9C%AC%E5%8F%B7/</url>
     <content><![CDATA[<h3 id="博客起源"><a href="#博客起源" class="headerlink" title="博客起源"></a>博客起源</h3><p>前段时间在部署项目的时候遇到点问题 🥸<br>在本地跑项目，测试没问题，部署到 uat 测试就出现问题，也就是说本地和服务器表现不一致，百思不得其‘姐’ 😓。经过各种调试、排查和查阅文档，终于发现是因为本地项目 package.json 的依赖的版本号和服务器不一样。至于为什么不一样请听我慢慢道来～</p>
 <span id="more"></span>
 
@@ -34,7 +34,7 @@
   </entry>
   <entry>
     <title>git仓库迁移</title>
-    <url>/2022/08/18/git/git%E4%BB%93%E5%BA%93%E8%BF%81%E7%A7%BB/</url>
+    <url>/iblog/2022/08/18/git/git%E4%BB%93%E5%BA%93%E8%BF%81%E7%A7%BB/</url>
     <content><![CDATA[<ol>
 <li>本地新建一个 mirrorGit 目录，从 gitlab 复制镜像至本地，示例</li>
 </ol>
