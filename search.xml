@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>package.json中的版本号以及^符号和~符号前缀的区别</title>
+    <url>/2022/09/02/framework/package.json%E4%B8%AD%E7%9A%84%E7%89%88%E6%9C%AC%E5%8F%B7/</url>
+    <content><![CDATA[<h3 id="博客起源"><a href="#博客起源" class="headerlink" title="博客起源"></a>博客起源</h3><p>前段时间在部署项目的时候遇到点问题 🥸<br>在本地跑项目，测试没问题，部署到 uat 测试就出现问题，也就是说本地和服务器表现不一致，百思不得其‘姐’ 😓。经过各种调试、排查和查阅文档，终于发现是因为本地项目 package.json 的依赖的版本号和服务器不一样。至于为什么不一样请听我慢慢道来～</p>
+<span id="more"></span>
+
+<h3 id="前端工程化"><a href="#前端工程化" class="headerlink" title="前端工程化"></a>前端工程化</h3><p>从前端工程化开始，就用 npm 管理各种依赖包。项目也会根据不同的需求引入不同的依赖包，各种包的更新也非常快，顺便插一句这个版本号的含义。版本号一般由 x.y.z 构成，各自代表的含义如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">z ：表⽰⼀些⼩的bugfix, 更改z的号，</span><br><span class="line">y ：表⽰⼀些⼤的版本更改，⽐如⼀些API的变化</span><br><span class="line">x ：表⽰⼀些设计的变动及模块的重构之类的，会升级x版本号</span><br></pre></td></tr></table></figure>
+
+<p>一个典型的 package.json 依赖配置：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;dependencies&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;react&quot;</span><span class="punctuation">:</span> <span class="string">&quot;16.14.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;react-dev-inspector&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^1.1.1&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;react-dom&quot;</span><span class="punctuation">:</span> <span class="string">&quot;~17.0.0&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看到这份配置中有的版本号前面加了<strong>^</strong>，有点加了<strong>～</strong>，也有什么都没加的纯版本号。在 package.json ⾥⾯ dependencies 依赖包的版本号前⾯的符号有两种，<strong>⼀种是~<strong>，</strong>⼀种是^</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">【限制次要版本】：~的意思是匹配最近的⼩版本 ⽐如~1.0.2将会匹配所有的1.0.x版本，但不匹配1.1.0</span><br><span class="line">【限制主版本号】：^的意思是最近的⼀个⼤版本 ⽐如1.0.2 将会匹配 所有 1.x.x, 但不包括2.x.x</span><br><span class="line">【精确控制】：纯版本号</span><br></pre></td></tr></table></figure>
+
+<p>说到这就明了了，查看 package.json 配置后发现确实有很多这种写法，排查了下出错的对应的依赖，固定其版本号，这样本地和服务器就表现一致了，也就解决了我那个百思不得其‘姐’ 的问题 🤗。目前服务器使用 jenkins 自动打包部署，因为脚本里写了 yarn install 或者 npm install，所以每次部署都会重新安装一遍依赖，如果包有更新版本，这一次的部署也就会用最新的版本号。而本地一次 install 后基本就不会动了，所以就导致了本地和服务器表现不一致。</p>
+<h3 id="固定版本号"><a href="#固定版本号" class="headerlink" title="固定版本号"></a>固定版本号</h3><p>那么如何固定版本号呢？有三总方法：</p>
+<h4 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h4><p>安装固定纯版本号，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot;react&quot;: &quot;16.14.0&quot;</span><br></pre></td></tr></table></figure>
+
+<h4 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm shrinkwrap</span><br><span class="line">npm shrinkwrap--dev # 将dev-dependencies计算在内</span><br></pre></td></tr></table></figure>
+
+<p>这会⽣成⼀个 shrinkwrap.json ⽂件，该⽂件包含了你正在使⽤的模块的指定版本。当运⾏ npm install 时，该⽂件所指定的模块版本会覆盖 package.json ⽂件中所指定的版本。注意，运⾏此命令的时候最好删 nodemodules ⽂件夹重新安装依赖。此外，如果 package-lock.json 和 npm-shrinkwrap.json 都存在于包根目录中，则将忽略 package-lock.json (npm 5.0 版本之后，执行 npm install 的时候 就会自动生成 package-lock.json 文件)。</p>
+<h4 id="方法三"><a href="#方法三" class="headerlink" title="方法三"></a>方法三</h4><p>使⽤ yarn 来管理依赖<br>yarn 是⼀个与 npm 兼容的 node 包管理器。使⽤它安装 npm 包，会⾃动在项⽬⽬录中创建⼀个 yarn.lock ⽂件。该⽂件包含了当前项⽬中所<br>安装的依赖包的版本信息。其他⼈在使⽤ yarn 安装项⽬的依赖包时就可以通过该⽂件创建⼀个完全相同的依赖环境。</p>
+]]></content>
+      <categories>
+        <category>项目架构</category>
+      </categories>
+      <tags>
+        <tag>pageage.json</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>git仓库迁移</title>
+    <url>/2022/08/18/git/git%E4%BB%93%E5%BA%93%E8%BF%81%E7%A7%BB/</url>
+    <content><![CDATA[<ol>
+<li>本地新建一个 mirrorGit 目录，从 gitlab 复制镜像至本地，示例</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">// 按实际情况自行替换xxxxxx</span><br><span class="line">git <span class="built_in">clone</span> --mirror ssh://xxxxxx.git</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>执行以下命令进入该目录</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">cd taro-kfc-test-modules.<span class="property">git</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>设置要推送的 gitee 仓库地址</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 按实际情况自行替换xxxxxx</span><br><span class="line">git remote set-url --push origin ssh://xxxxxx.git</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>获取镜像数据信息</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git fetch -p origin</span><br></pre></td></tr></table></figure>
+
+<h3 id="同步信息至-gitee"><a href="#同步信息至-gitee" class="headerlink" title="同步信息至 gitee"></a>同步信息至 gitee</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git push --mirror</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>后期 gitlab 上有改变，可找一个时间进入 mirrorGit&#x2F;xxxxxx.git 目录，直接执行 4&#x2F;5 两个步骤，集中同步所有的更新信息至 gitee 仓库</li>
+</ol>
+]]></content>
+      <categories>
+        <category>git</category>
+      </categories>
+  </entry>
+</search>
