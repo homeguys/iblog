@@ -230,7 +230,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2022-09-02 16:14:17 / 修改时间：17:47:20" itemprop="dateCreated datePublished" datetime="2022-09-02T16:14:17+08:00">2022-09-02</time>
+      <time title="创建时间：2022-09-02 16:14:17 / 修改时间：19:10:51" itemprop="dateCreated datePublished" datetime="2022-09-02T16:14:17+08:00">2022-09-02</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -254,7 +254,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h3 id="博客起源"><a href="#博客起源" class="headerlink" title="博客起源"></a>博客起源</h3><p>前段时间在部署项目的时候遇到点问题 🥸<br>在本地跑项目，测试没问题，部署到 uat 测试就出现问题，也就是说本地和服务器表现不一致，百思不得其‘姐’ 😓。经过各种调试、排查和查阅文档，终于发现是因为本地项目 package.json 的依赖的版本号和服务器不一样。至于为什么不一样请听我慢慢道来～</p>
+          <h3 id="起源"><a href="#起源" class="headerlink" title="起源"></a>起源</h3><p>前段时间在部署项目的时候遇到点问题 🥸<br>在本地跑项目，测试没问题，部署到 uat 测试就出现问题，也就是说本地和服务器表现不一致，百思不得其‘姐’ 😓。经过各种调试、排查和查阅文档，终于发现是因为本地项目 package.json 的依赖的版本号和服务器不一样。至于为什么不一样请听我慢慢道来～</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/iblog/2022/09/02/framework/package.json%E4%B8%AD%E7%9A%84%E7%89%88%E6%9C%AC%E5%8F%B7/#more" rel="contents">
@@ -324,7 +324,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-09-02 18:06:10" itemprop="dateModified" datetime="2022-09-02T18:06:10+08:00">2022-09-02</time>
+      <time title="修改时间：2022-09-02 19:15:24" itemprop="dateModified" datetime="2022-09-02T19:15:24+08:00">2022-09-02</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -348,32 +348,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <ol>
-<li>本地新建一个 mirrorGit 目录，从 gitlab 复制镜像至本地，示例</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 按实际情况自行替换xxxxxx</span><br><span class="line">git <span class="built_in">clone</span> --mirror ssh://xxxxxx.git</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>执行以下命令进入该目录</li>
-</ol>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd taro-kfc-test-modules.<span class="property">git</span></span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>设置要推送的 gitee 仓库地址</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 按实际情况自行替换xxxxxx</span><br><span class="line">git remote set-url --push origin ssh://xxxxxx.git</span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li>获取镜像数据信息</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git fetch -p origin</span><br></pre></td></tr></table></figure>
-
-<h3 id="同步信息至-gitee"><a href="#同步信息至-gitee" class="headerlink" title="同步信息至 gitee"></a>同步信息至 gitee</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push --mirror</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>后期 gitlab 上有改变，可找一个时间进入 mirrorGit&#x2F;xxxxxx.git 目录，直接执行 4&#x2F;5 两个步骤，集中同步所有的更新信息至 gitee 仓库</li>
-</ol>
-
+          <h3 id="起源"><a href="#起源" class="headerlink" title="起源"></a>起源</h3><p>公司需要将将仓库从 gitlab 迁移至码云</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/iblog/2022/08/18/git/git%E4%BB%93%E5%BA%93%E8%BF%81%E7%A7%BB/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
